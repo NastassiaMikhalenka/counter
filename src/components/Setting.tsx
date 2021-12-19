@@ -54,6 +54,8 @@ export const Setting = ({
     const updateDataCallBackHandler = () => {
         setMessage(null)
         setCount(minValue)
+        localStorage.setItem('minValue', JSON.stringify(minValue))
+        localStorage.setItem('maxValue', JSON.stringify(maxValue))
     }
 
     const classNameErrorInputMax = () => error ? 'error' : ''

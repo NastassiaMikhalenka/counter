@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Setting} from "./components/Setting";
 import {Counter} from "./components/Counter";
@@ -12,9 +12,30 @@ function App() {
     const [error, setError] = useState<boolean>(false)
     const [message, setMessage] = useState<messageType>(null)
 
+    useEffect(() => {
+    }, [minValue])
+
+    useEffect(() => {
+    }, [maxValue])
+
+    useEffect(() => {
+        let minValueAsString = localStorage.getItem('minValue')
+        if (minValueAsString) {
+            let newMinValueAsString = JSON.parse(minValueAsString)
+            setMinValue(newMinValueAsString)
+        }
+    }, [])
+
+    useEffect(() => {
+        let maxValueAsString = localStorage.getItem('maxValue')
+        if (maxValueAsString) {
+            let newMaxValueAsString = JSON.parse(maxValueAsString)
+            setMaxValue(newMaxValueAsString)
+        }
+    }, [])
+
     return (
         <div className="app">
-
             <Setting
                 maxValue={maxValue}
                 minValue={minValue}
