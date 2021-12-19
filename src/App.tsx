@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import './App.css';
 import {Button} from "./components/Button";
 import {Count} from "./components/Count";
+import {Setting} from "./components/Setting";
 
-type messageType = `Enter values and press "SET"` | null | "incorrect"
+export type messageType = `Enter values and press "SET"` | null | "incorrect"
 
 function App() {
   const [minValue, setMinValue] = useState(0)
@@ -16,65 +17,20 @@ function App() {
 
   const onClickDischargeHandler = () => setCount(minValue);
 
-  const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.valueAsNumber
-    setMaxValue(value)
-    if (value < 0 || value <= minValue || minValue < 0) {
-      setMessage("incorrect")
-      setError(true)
-    } else {
-      setMessage(`Enter values and press "SET"` )
-      setError(false)
-    }
-  }
-
-  const onChangeMinValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.currentTarget.valueAsNumber
-    setMinValue(value)
-    if (value < 0 || value >= maxValue || maxValue < 0) {
-      setMessage("incorrect")
-      setError(true)
-    } else {
-      setMessage(`Enter values and press "SET"` )
-      setError(false)
-    }
-
-  }
-
-  const updateDataCallBackHandler = () => {
-    setMessage(null)
-    setCount(minValue)
-  }
-
-  const classNameErrorInputMax = () => error ? 'error' : ''
-  const classNameErrorInputMin = () => error ? 'error' : ''
-
-  const btnDisabled = minValue < 0 || maxValue < 0 || minValue === maxValue ||
-      minValue > maxValue || message !== `Enter values and press "SET"`
-
   return (
       <div className="app">
-        <div className={"appWrapper"}>
-          <div className={"wrapperCount"}>
-            <div className={"valueContainer"}>
-              <span>Max value</span>
-              <input
-                  className={classNameErrorInputMax()}
-                  type={"number"} value={maxValue}
-                  onChange={onChangeMaxValueHandler}/>
-            </div>
-            <div className={"valueContainer"}>
-              <span>Start value</span>
-              <input
-                  className={classNameErrorInputMin()}
-                  type={"number"} value={minValue}
-                  onChange={onChangeMinValueHandler}/>
-            </div>
-          </div>
-          <div className={"wrapperButton"}>
-            <Button title={"Set"} callback={updateDataCallBackHandler} disabled={btnDisabled}/>
-          </div>
-        </div>
+
+        <Setting
+            maxValue={maxValue}
+            minValue={minValue}
+            setMinValue={setMinValue}
+            setMaxValue={setMaxValue}
+            setError={setError}
+            setMessage={setMessage}
+            setCount={setCount}
+            message={message}
+            error={error}
+        />
         <div className={"appWrapper"}>
           <div className={"wrapperCount"}>
             {
