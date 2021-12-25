@@ -22,6 +22,30 @@ function App() {
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
+    useEffect(() => {
+        let countValueAsString = localStorage.getItem('countValue')
+        if (countValueAsString) {
+            let newValue = JSON.parse(countValueAsString)
+            dispatch(updateDataValueAC(newValue))
+        }
+        let minValueAsString = localStorage.getItem('minCountValue')
+        if (minValueAsString) {
+            let newValue = JSON.parse(minValueAsString)
+            dispatch(onChangeMinValueAC(newValue))
+        }
+        let maxValueAsString = localStorage.getItem('maxCountValue')
+        if (maxValueAsString) {
+            let newValue = JSON.parse(maxValueAsString)
+            dispatch(onChangeMaxValueAC(newValue))
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('countValue', JSON.stringify(state.count))
+        localStorage.setItem('minValue', JSON.stringify(state.minValue))
+        localStorage.setItem('maxValue', JSON.stringify(state.maxValue))
+    }, [state])
+
     // setting
     const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.currentTarget.valueAsNumber
@@ -48,19 +72,25 @@ function App() {
     }
 
     const updateDataCallBackHandler = () => {
-        setMessage(null)
-        dispatch(updateDataValueAC(state.minValue))
-        // localStorage.setItem('minValue', JSON.stringify(minValue))
-        // localStorage.setItem('maxValue', JSON.stringify(maxValue))
+        if (state.maxValue - state.minValue > 0 || state.maxValue - state.minValue !== 0 ) {
+            setMessage(null)
+            localStorage.setItem('minCountValue', state.minValue.toString())
+            localStorage.setItem('maxCountValue', state.maxValue.toString())
+            dispatch(updateDataValueAC(state.minValue))
+        } else {
+            setError(true)
+        }
     }
-
 
     const btnDisabled = state.minValue < 0 || state.maxValue < 0 || state.minValue === state.maxValue ||
         state.minValue > state.maxValue
 
     // counter
     const onClickHandler = () => state.count < state.maxValue ? dispatch(onClickIncHandlerAC(state.count)) : null;
-    const onClickDischargeHandler = () => dispatch(onClickDischargeHandlerAC(state.minValue));
+    const onClickDischargeHandler = () => {
+        localStorage.clear()
+        dispatch(onClickDischargeHandlerAC(state.minValue));
+    }
 
     return (
         <div className="app">
