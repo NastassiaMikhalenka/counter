@@ -28,12 +28,12 @@ function App() {
             let newValue = JSON.parse(countValueAsString)
             dispatch(updateDataValueAC(newValue))
         }
-        let minValueAsString = localStorage.getItem('minCountValue')
+        let minValueAsString = localStorage.getItem('minValue')
         if (minValueAsString) {
             let newValue = JSON.parse(minValueAsString)
             dispatch(onChangeMinValueAC(newValue))
         }
-        let maxValueAsString = localStorage.getItem('maxCountValue')
+        let maxValueAsString = localStorage.getItem('maxValue')
         if (maxValueAsString) {
             let newValue = JSON.parse(maxValueAsString)
             dispatch(onChangeMaxValueAC(newValue))
@@ -74,8 +74,8 @@ function App() {
     const updateDataCallBackHandler = () => {
         if (state.maxValue - state.minValue > 0 || state.maxValue - state.minValue !== 0 ) {
             setMessage(null)
-            localStorage.setItem('minCountValue', state.minValue.toString())
-            localStorage.setItem('maxCountValue', state.maxValue.toString())
+            localStorage.setItem('minValue', state.minValue.toString())
+            localStorage.setItem('maxValue', state.maxValue.toString())
             dispatch(updateDataValueAC(state.minValue))
         } else {
             setError(true)
