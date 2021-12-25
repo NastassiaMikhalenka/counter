@@ -5,64 +5,63 @@ import {messageType} from "../App";
 type PropsType = {
     maxValue: number
     minValue: number
-    setMinValue: (valueAsNumber: number) => void
-    setMaxValue: (valueAsNumber: number) => void
     setError: (error: boolean) => void
     setMessage: (message: messageType) => void
-    setCount: (minValue: number) => void
     message: messageType
     error: boolean
+    btnDisabled: boolean
+    updateDataCallBackHandler: () => void
+    onChangeMinValueHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onChangeMaxValueHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Setting = ({
+                            onChangeMaxValueHandler,
+                            onChangeMinValueHandler,
+                            updateDataCallBackHandler,
+                            btnDisabled,
                             error,
                             message,
-                            setCount,
                             maxValue,
                             minValue,
-                            setMinValue,
-                            setMaxValue,
-                            setError,
-                            setMessage
                         }: PropsType) => {
 
-    const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.currentTarget.valueAsNumber
-        setMaxValue(value)
-        if (value < 0 || value <= minValue || minValue < 0) {
-            setMessage("incorrect")
-            setError(true)
-        } else {
-            setMessage(`Enter values and press "SET"`)
-            setError(false)
-        }
-    }
-
-    const onChangeMinValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.currentTarget.valueAsNumber
-        setMinValue(value)
-        if (value < 0 || value >= maxValue || maxValue < 0) {
-            setMessage("incorrect")
-            setError(true)
-        } else {
-            setMessage(`Enter values and press "SET"`)
-            setError(false)
-        }
-
-    }
-
-    const updateDataCallBackHandler = () => {
-        setMessage(null)
-        setCount(minValue)
-        localStorage.setItem('minValue', JSON.stringify(minValue))
-        localStorage.setItem('maxValue', JSON.stringify(maxValue))
-    }
+    // const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     let value = e.currentTarget.valueAsNumber
+    //     setMaxValue(value)
+    //     if (value < 0 || value <= minValue || minValue < 0) {
+    //         setMessage("incorrect")
+    //         setError(true)
+    //     } else {
+    //         setMessage(`Enter values and press "SET"`)
+    //         setError(false)
+    //     }
+    // }
+    //
+    // const onChangeMinValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     let value = e.currentTarget.valueAsNumber
+    //     setMinValue(value)
+    //     if (value < 0 || value >= maxValue || maxValue < 0) {
+    //         setMessage("incorrect")
+    //         setError(true)
+    //     } else {
+    //         setMessage(`Enter values and press "SET"`)
+    //         setError(false)
+    //     }
+    // }
+    //
+    // const updateDataCallBackHandler = () => {
+    //     setMessage(null)
+    //     setCount(minValue)
+    //     // localStorage.setItem('minValue', JSON.stringify(minValue))
+    //     // localStorage.setItem('maxValue', JSON.stringify(maxValue))
+    // }
+    //
+    // const btnDisabled = minValue < 0 || maxValue < 0 || minValue === maxValue ||
+    //     minValue > maxValue
 
     const classNameErrorInputMax = () => error ? 'error' : ''
     const classNameErrorInputMin = () => error ? 'error' : ''
-
-    const btnDisabled = minValue < 0 || maxValue < 0 || minValue === maxValue ||
-        minValue > maxValue
 
     return (
         <div className={"appWrapper"}>

@@ -6,17 +6,23 @@ import {Count} from "./Count";
 type PropsType = {
     maxValue: number
     minValue: number
-    setCount: (minValue: number) => void
     message: messageType
     error: boolean
     count: number
+    onClickDischargeHandler: () => void
+    onClickHandler: () => void
 }
 
 
-export const Counter = ({count, setCount, minValue, maxValue, error, message}: PropsType) => {
+export const Counter = ({
+                            onClickHandler, onClickDischargeHandler,
+                            count,
+                            minValue, maxValue,
+                            error, message
+                        }: PropsType) => {
 
-    const onClickHandler = () => count < maxValue ? setCount(count + 1) : null;
-    const onClickDischargeHandler = () => setCount(minValue);
+    // const onClickHandler = () => count < maxValue ? setCount(count + 1) : null;
+    // const onClickDischargeHandler = () => setCount(minValue);
 
     return (
         <div className={"appWrapper"}>
