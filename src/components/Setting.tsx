@@ -1,64 +1,66 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button} from "./Button";
 import {messageType} from "../App";
+import {useDispatch, useSelector} from "react-redux";
+import {rootReducerType} from "../redux/store";
+import {initialStateType, onChangeMaxValueAC, onChangeMinValueAC, updateDataValueAC} from "../redux/Reducers";
 
 type PropsType = {
-    maxValue: number
-    minValue: number
     setError: (error: boolean) => void
     setMessage: (message: messageType) => void
     message: messageType
     error: boolean
-    btnDisabled: boolean
-    updateDataCallBackHandler: () => void
-    onChangeMinValueHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onChangeMaxValueHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Setting = ({
-                            onChangeMaxValueHandler,
-                            onChangeMinValueHandler,
-                            updateDataCallBackHandler,
-                            btnDisabled,
                             error,
                             message,
-                            maxValue,
-                            minValue,
+                            setError,
+                            setMessage
                         }: PropsType) => {
 
-    // const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     let value = e.currentTarget.valueAsNumber
-    //     setMaxValue(value)
-    //     if (value < 0 || value <= minValue || minValue < 0) {
-    //         setMessage("incorrect")
-    //         setError(true)
-    //     } else {
-    //         setMessage(`Enter values and press "SET"`)
-    //         setError(false)
-    //     }
-    // }
-    //
-    // const onChangeMinValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     let value = e.currentTarget.valueAsNumber
-    //     setMinValue(value)
-    //     if (value < 0 || value >= maxValue || maxValue < 0) {
-    //         setMessage("incorrect")
-    //         setError(true)
-    //     } else {
-    //         setMessage(`Enter values and press "SET"`)
-    //         setError(false)
-    //     }
-    // }
-    //
-    // const updateDataCallBackHandler = () => {
-    //     setMessage(null)
-    //     setCount(minValue)
-    //     // localStorage.setItem('minValue', JSON.stringify(minValue))
-    //     // localStorage.setItem('maxValue', JSON.stringify(maxValue))
-    // }
-    //
-    // const btnDisabled = minValue < 0 || maxValue < 0 || minValue === maxValue ||
-    //     minValue > maxValue
+
+    let minValue = useSelector<rootReducerType, number>(state => state.counter.minValue)
+    let maxValue = useSelector<rootReducerType, number>(state => state.counter.maxValue)
+    let dispatch = useDispatch()
+
+    const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.currentTarget.valueAsNumber
+        dispatch(onChangeMaxValueAC(value))
+        if (value < 0 || value <= minValue || minValue < 0) {
+            setMessage("incorrect")
+            setError(true)
+        } else {
+            setMessage(`Enter values and press "SET"`)
+            setError(false)
+        }
+    }
+
+    const onChangeMinValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let value = e.currentTarget.valueAsNumber
+        dispatch(onChangeMinValueAC(value))
+        if (value < 0 || value >= maxValue || maxValue < 0) {
+            setMessage("incorrect")
+            setError(true)
+        } else {
+            setMessage(`Enter values and press "SET"`)
+            setError(false)
+        }
+    }
+
+    const updateDataCallBackHandler = () => {
+        if (maxValue - minValue > 0 || maxValue - minValue !== 0) {
+            setMessage(null)
+            // localStorage.setItem('minValue', state.minValue.toString())
+            // localStorage.setItem('maxValue', state.maxValue.toString())
+            dispatch(updateDataValueAC(minValue))
+        } else {
+            setError(true)
+        }
+    }
+
+    const btnDisabled = minValue < 0 || maxValue < 0 || minValue === maxValue ||
+        minValue > maxValue
 
     const classNameErrorInputMax = () => error ? 'error' : ''
     const classNameErrorInputMin = () => error ? 'error' : ''

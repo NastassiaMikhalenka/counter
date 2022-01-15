@@ -48,45 +48,6 @@ function App() {
     //     localStorage.setItem('maxValue', JSON.stringify(state.maxValue))
     // }, [state])
 
-    // setting
-    const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.currentTarget.valueAsNumber
-        dispatch(onChangeMaxValueAC(value))
-        if (value < 0 || value <= state.minValue || state.minValue < 0) {
-            setMessage("incorrect")
-            setError(true)
-        } else {
-            setMessage(`Enter values and press "SET"`)
-            setError(false)
-        }
-    }
-
-    const onChangeMinValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.currentTarget.valueAsNumber
-        dispatch(onChangeMinValueAC(value))
-        if (value < 0 || value >= state.maxValue || state.maxValue < 0) {
-            setMessage("incorrect")
-            setError(true)
-        } else {
-            setMessage(`Enter values and press "SET"`)
-            setError(false)
-        }
-    }
-
-    const updateDataCallBackHandler = () => {
-        if (state.maxValue - state.minValue > 0 || state.maxValue - state.minValue !== 0 ) {
-            setMessage(null)
-            // localStorage.setItem('minValue', state.minValue.toString())
-            // localStorage.setItem('maxValue', state.maxValue.toString())
-            dispatch(updateDataValueAC(state.minValue))
-        } else {
-            setError(true)
-        }
-    }
-
-    const btnDisabled = state.minValue < 0 || state.maxValue < 0 || state.minValue === state.maxValue ||
-        state.minValue > state.maxValue
-
     // counter
     const onClickHandler = () => state.count < state.maxValue ? dispatch(onClickIncHandlerAC(state.count)) : null;
     const onClickDischargeHandler = () => {
@@ -97,16 +58,10 @@ function App() {
     return (
         <div className="app">
             <Setting
-                onChangeMaxValueHandler={onChangeMaxValueHandler}
-                onChangeMinValueHandler={onChangeMinValueHandler}
-                maxValue={state.maxValue}
-                minValue={state.minValue}
                 setError={setError}
                 setMessage={setMessage}
                 message={message}
                 error={error}
-                btnDisabled={btnDisabled}
-                updateDataCallBackHandler={updateDataCallBackHandler}
             />
             <Counter
                 onClickHandler={onClickHandler}
