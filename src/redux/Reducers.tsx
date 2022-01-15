@@ -1,10 +1,10 @@
-export type initialStateType = typeof initialState;
-
 export const initialState = {
     count: 0,
     minValue: 0,
     maxValue: 5,
 }
+
+export type initialStateType = typeof initialState;
 
 type ActionsType =
     onChangeMaxValueACType

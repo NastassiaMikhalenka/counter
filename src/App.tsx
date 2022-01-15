@@ -24,29 +24,29 @@ function App() {
     let state = useSelector<rootReducerType, initialStateType> (state => state.counter)
     let dispatch = useDispatch()
 
-    useEffect(() => {
-        let countValueAsString = localStorage.getItem('countValue')
-        if (countValueAsString) {
-            let newValue = JSON.parse(countValueAsString)
-            dispatch(updateDataValueAC(newValue))
-        }
-        let minValueAsString = localStorage.getItem('minValue')
-        if (minValueAsString) {
-            let newValue = JSON.parse(minValueAsString)
-            dispatch(onChangeMinValueAC(newValue))
-        }
-        let maxValueAsString = localStorage.getItem('maxValue')
-        if (maxValueAsString) {
-            let newValue = JSON.parse(maxValueAsString)
-            dispatch(onChangeMaxValueAC(newValue))
-        }
-    }, [])
+    // useEffect(() => {
+    //     // let countValueAsString = localStorage.getItem('countValue')
+    //     // if (countValueAsString) {
+    //     //     let newValue = JSON.parse(countValueAsString)
+    //     //     dispatch(updateDataValueAC(newValue))
+    //     // }
+    //     let minValueAsString = localStorage.getItem('minValue')
+    //     if (minValueAsString) {
+    //         let newValue = JSON.parse(minValueAsString)
+    //         dispatch(onChangeMinValueAC(newValue))
+    //     }
+    //     let maxValueAsString = localStorage.getItem('maxValue')
+    //     if (maxValueAsString) {
+    //         let newValue = JSON.parse(maxValueAsString)
+    //         dispatch(onChangeMaxValueAC(newValue))
+    //     }
+    // }, [])
 
-    useEffect(() => {
-        localStorage.setItem('countValue', JSON.stringify(state.count))
-        localStorage.setItem('minValue', JSON.stringify(state.minValue))
-        localStorage.setItem('maxValue', JSON.stringify(state.maxValue))
-    }, [state])
+    // useEffect(() => {
+    //     localStorage.setItem('countValue', JSON.stringify(state.count))
+    //     localStorage.setItem('minValue', JSON.stringify(state.minValue))
+    //     localStorage.setItem('maxValue', JSON.stringify(state.maxValue))
+    // }, [state])
 
     // setting
     const onChangeMaxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,8 +76,8 @@ function App() {
     const updateDataCallBackHandler = () => {
         if (state.maxValue - state.minValue > 0 || state.maxValue - state.minValue !== 0 ) {
             setMessage(null)
-            localStorage.setItem('minValue', state.minValue.toString())
-            localStorage.setItem('maxValue', state.maxValue.toString())
+            // localStorage.setItem('minValue', state.minValue.toString())
+            // localStorage.setItem('maxValue', state.maxValue.toString())
             dispatch(updateDataValueAC(state.minValue))
         } else {
             setError(true)
