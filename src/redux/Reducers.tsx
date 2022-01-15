@@ -19,7 +19,7 @@ const UPDATE_VALUES = "UPDATE_VALUES"
 const ON_CLICK_INC = "ON_CLICK_INC"
 const ON_CLICK_DIS = "ON_CLICK_DIS"
 
-export const reducer = (state: initialStateType, action: ActionsType) => {
+export const reducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
         case ON_CHANGE_MAX_VALUE:
             return {

@@ -3,24 +3,26 @@ import './App.css';
 import {Setting} from "./components/Setting";
 import {Counter} from "./components/Counter";
 import {
-    initialState,
+    initialState, initialStateType,
     onChangeMaxValueAC,
     onChangeMinValueAC, onClickDischargeHandlerAC,
     onClickIncHandlerAC,
     reducer,
     updateDataValueAC
 } from "./redux/Reducers";
+import {useDispatch, useSelector} from "react-redux";
+import {rootReducerType} from "./redux/store";
 
 export type messageType = `Enter values and press "SET"` | null | "incorrect"
 
 function App() {
-    // const [minValue, setMinValue] = useState(0)
-    // const [maxValue, setMaxValue] = useState(5)
-    // const [count, setCount] = useState<number>(0)
     const [error, setError] = useState<boolean>(false)
     const [message, setMessage] = useState<messageType>(null)
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+    // const [state, dispatch] = useReducer(reducer, initialState)
+
+    let state = useSelector<rootReducerType, initialStateType> (state => state.counter)
+    let dispatch = useDispatch()
 
     useEffect(() => {
         let countValueAsString = localStorage.getItem('countValue')
