@@ -2,40 +2,38 @@ import React from "react";
 import {Button} from "./Button";
 import {messageType} from "../App";
 import {Count} from "./Count";
+import {initialStateType, onClickDischargeHandlerAC, onClickIncHandlerAC} from "../redux/Reducers";
+import {useDispatch, useSelector} from "react-redux";
+import {rootReducerType} from "../redux/store";
 
 type PropsType = {
-    maxValue: number
-    minValue: number
     message: messageType
     error: boolean
-    count: number
-    onClickDischargeHandler: () => void
-    onClickHandler: () => void
 }
 
+export const Counter = ({error, message}: PropsType) => {
+    let state = useSelector<rootReducerType, initialStateType>(state => state.counter)
+    let dispatch = useDispatch()
 
-export const Counter = ({
-                            onClickHandler, onClickDischargeHandler,
-                            count,
-                            minValue, maxValue,
-                            error, message
-                        }: PropsType) => {
-
-    // const onClickHandler = () => count < maxValue ? setCount(count + 1) : null;
-    // const onClickDischargeHandler = () => setCount(minValue);
+    const onClickHandler = () => state.count < state.maxValue ? dispatch(onClickIncHandlerAC(state.count)) : null;
+    const onClickDischargeHandler = () => {
+        localStorage.clear()
+        dispatch(onClickDischargeHandlerAC(state.minValue));
+    }
 
     return (
         <div className={"appWrapper"}>
             <div className={"wrapperCount"}>
                 {
                     error && message ? "incorrect" : message ? message
-                        : <Count value={count} maxValue={maxValue}/>
+                        : <Count value={state.count} maxValue={state.maxValue}/>
                 }
             </div>
             <div className={"wrapperButton"}>
-                <Button title={"Inc"} callback={onClickHandler} disabled={message ? true : count === maxValue}/>
+                <Button title={"Inc"} callback={onClickHandler}
+                        disabled={message ? true : state.count === state.maxValue}/>
                 <Button title={"Reset"} callback={onClickDischargeHandler}
-                        disabled={message ? true : count === minValue}/>
+                        disabled={message ? true : state.count === state.minValue}/>
             </div>
         </div>
     )

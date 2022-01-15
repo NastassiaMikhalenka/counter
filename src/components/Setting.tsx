@@ -3,7 +3,7 @@ import {Button} from "./Button";
 import {messageType} from "../App";
 import {useDispatch, useSelector} from "react-redux";
 import {rootReducerType} from "../redux/store";
-import {initialStateType, onChangeMaxValueAC, onChangeMinValueAC, updateDataValueAC} from "../redux/Reducers";
+import {onChangeMaxValueAC, onChangeMinValueAC, updateDataValueAC} from "../redux/Reducers";
 
 type PropsType = {
     setError: (error: boolean) => void
@@ -12,14 +12,7 @@ type PropsType = {
     error: boolean
 }
 
-export const Setting = ({
-                            error,
-                            message,
-                            setError,
-                            setMessage
-                        }: PropsType) => {
-
-
+export const Setting = ({error, message, setError, setMessage}: PropsType) => {
     let minValue = useSelector<rootReducerType, number>(state => state.counter.minValue)
     let maxValue = useSelector<rootReducerType, number>(state => state.counter.maxValue)
     let dispatch = useDispatch()
