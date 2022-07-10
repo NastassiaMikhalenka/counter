@@ -2,6 +2,7 @@ import React, {useEffect, useReducer, useState} from 'react';
 import './App.css';
 import {Setting} from "./components/Setting";
 import {Counter} from "./components/Counter";
+
 // import {
 //     initialState, initialStateType,
 //     onChangeMaxValueAC,
