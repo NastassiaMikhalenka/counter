@@ -17,7 +17,6 @@ import {Counter} from "./components/Counter";
 export type messageType = `Enter values and press "SET"` | null | "incorrect"
 
 function App() {
-
     const [error, setError] = useState<boolean>(false)
     const [message, setMessage] = useState<messageType>(null)
 
